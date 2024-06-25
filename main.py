@@ -1,7 +1,11 @@
+""" import of elements from tkinter."""
 from tkinter import Tk, Label, Entry, Button, messagebox
 
 
 class LoanCalculatorApp:
+    """This class represents an app for loan computing.
+    It creates GUI by using tkinter library for input data
+    about annual interest rate, number of years and loan amount."""
     def __init__(self):
         self.window = Tk()
         self.window.geometry('550x350')
@@ -56,25 +60,31 @@ class LoanCalculatorApp:
 
     def get_monthly_payment(self, loan_amount,
                             monthly_interest_rate, number_of_years):
+        """Method for monthly payment calculation."""
         monthly_payment = loan_amount * monthly_interest_rate / (1
         - 1 / (1 + monthly_interest_rate) ** (number_of_years * 12))
         return monthly_payment
 
     def compute_payment(self):  # try and except (ValueError)
-        monthly_payment = self.get_monthly_payment(
-            float(self.entry_loan_amount.get()),
-            float(self.entry_interest_rate.get()) / 1200,
-            int(self.entry_number_years.get())
-        )
-        self.result_monthly_payment.config(
-            text=f'{monthly_payment:.3f}')
+        """Method for total payment calculation, it also displays the results."""
+        try:
+            monthly_payment = self.get_monthly_payment(
+                float(self.entry_loan_amount.get()),
+                float(self.entry_interest_rate.get()) / 1200,
+                int(self.entry_number_years.get())
+            )
+            self.result_monthly_payment.config(
+                text=f'{monthly_payment:.3f}')
 
-        total_payment = monthly_payment * \
-                        (int(self.entry_number_years.get()) * 12)
-        self.result_total_payment.config(
-            text=f'{total_payment:.3f}')
+            total_payment = monthly_payment * \
+                            (int(self.entry_number_years.get()) * 12)
+            self.result_total_payment.config(
+                text=f'{total_payment:.3f}')
+        except ValueError:
+            messagebox.showerror("Error", "Please enter valid numerical values.")
 
     def on_close(self):
+        """Method, that creates message box when user tries to close app."""
         exit_choice = messagebox.askyesno(title='Exit window',
                                           message='Would you like to close the program?')
         if exit_choice:
