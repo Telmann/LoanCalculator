@@ -56,7 +56,7 @@ class LoanCalculatorApp:
                                        padx=10, pady=10)
 
         self.window.protocol("WM_DELETE_WINDOW",  self.on_close)
-        self.window.mainloop()
+        # self.window.mainloop()
 
     def get_monthly_payment(self, loan_amount: float,
                             monthly_interest_rate: float, number_of_years: int) -> float:
@@ -86,9 +86,15 @@ class LoanCalculatorApp:
     def on_close(self) -> None:
         """Method, that creates message box when user tries to close app."""
         exit_choice: bool = messagebox.askyesno(title='Exit window',
-                                          message='Would you like to close the program?')
+                                                message='Would you like to close the program?')
         if exit_choice:
             self.window.destroy()
 
 
-simple_loan_calc: LoanCalculatorApp = LoanCalculatorApp()
+def start_application():
+    simple_loan_calc: LoanCalculatorApp = LoanCalculatorApp()
+    return simple_loan_calc  # will return the application without starting the main loop.
+
+
+if __name__ == "__main__":
+    start_application().window.mainloop()
